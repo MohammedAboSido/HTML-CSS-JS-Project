@@ -9,7 +9,7 @@ body {
 }
 
 /* Start Settings Box */
-.settngs-box {
+.settings-box {
     position: fixed;
     left: -200px;
     top: 0;
@@ -20,22 +20,27 @@ body {
     transition: var(--main-transition);
 }
 
-.settngs-box.open {
+.settings-box.open {
     left: 0;
 }
 
-.settngs-box .setting-icon {
+.settings-box .setting-icon {
     position: absolute;
     right: -30px;
     top: 100px;
     background-color: var(--white-color);
-    padding: 8px 0;
-    width: 30px;
     text-align: center;
     cursor: pointer;
+    border-radius: 1px;
+
 }
 
-.settngs-box .settings-container {}
+.settings-box .setting-icon .fa-cog {
+    padding: 8px 0;
+    width: 30px;
+}
+
+.settings-box .settings-container {}
 
 /* End Settings Box */
 /* Start Landing Page */
