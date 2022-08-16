@@ -8,6 +8,36 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+/* Start Settings Box */
+.settngs-box {
+    position: fixed;
+    left: -200px;
+    top: 0;
+    background-color: var(--white-color);
+    width: 200px;
+    z-index: 1000;
+    min-height: 100vh;
+    transition: var(--main-transition);
+}
+
+.settngs-box.open {
+    left: 0;
+}
+
+.settngs-box .setting-icon {
+    position: absolute;
+    right: -30px;
+    top: 100px;
+    background-color: var(--white-color);
+    padding: 8px 0;
+    width: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.settngs-box .settings-container {}
+
+/* End Settings Box */
 /* Start Landing Page */
 .landing-page {
     min-height: 100vh;
