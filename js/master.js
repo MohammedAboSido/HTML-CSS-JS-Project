@@ -22,6 +22,36 @@ let backgroundOption = true;
 //Variable To Control The Background Interval 
 let backgroundInterval;
 
+//check If there is  LocalStorage Random background Item
+let backgroundLocalItem = localStorage.getItem( "background_option" );
+
+//check if radom background local storage not empty
+if ( backgroundLocalItem !== null )
+{
+    if ( backgroundLocalItem === 'true' )
+    {
+        backgroundOption = true;
+    } else
+    {
+        backgroundOption = false;
+    }
+    //Remove Active Class From All Spans 
+    document.querySelectorAll( ".random-backgrounds span" ).forEach( element =>
+    {
+        element.classList.remove( "active" );
+    } );
+
+    if ( backgroundOption === true )
+    {
+        document.querySelector( ".random-backgrounds .yes" ).classList.add( "active" );
+    } else
+    {
+        document.querySelector( ".random-backgrounds .no" ).classList.add( "active" );
+    }
+
+
+}
+
 //Toggle Spin Class On Icon 
 document.querySelector( ".setting-icon .fa-cog" ).onclick = function ()
 {
@@ -75,14 +105,20 @@ randomBackEl.forEach( span =>
         {
             backgroundOption = true;
             randomizeImgs();
+
+            //Add background Option To Local Storage
+            localStorage.setItem( "background_option", true );
         } else
         {
             backgroundOption = false;
             clearInterval( backgroundInterval );
+            //Add background Option To Local Storage
+            localStorage.setItem( "background_option", false );
+
         }
     } );
 } );
-
+randomizeImgs();
 
 //Select Landing Page Element
 
