@@ -73,13 +73,7 @@ colorsLi.forEach( li =>
         document.documentElement.style.setProperty( '--main-color', e.target.dataset.color );
         //Set Color On Local Storage
         localStorage.setItem( "color_option", e.target.dataset.color );
-        //Remove Active Class From All Childrens 
-        e.target.parentElement.querySelectorAll( ".active" ).forEach( element =>
-        {
-            element.classList.remove( "active" );
-        } );
-        //Add Active Class For Target Element
-        e.target.classList.add( "active" );
+        handleActive( e );
     } );
 } );
 
@@ -92,14 +86,7 @@ randomBackEl.forEach( span =>
     //Click On Every Span
     span.addEventListener( "click", ( e ) =>
     {
-
-        //Remove Active Class From All Childrens 
-        e.target.parentElement.querySelectorAll( ".active" ).forEach( element =>
-        {
-            element.classList.remove( "active" );
-        } );
-        //Add Active Class For Target Element
-        e.target.classList.add( "active" );
+        handleActive( e );
 
         if ( e.target.dataset.background === "yes" )
         {
@@ -166,9 +153,9 @@ window.onscroll = function ()
     if ( windowScrollTop > ( ( skillsOffsetTop + skillsOuterHeight ) - windowHeight ) )
     {
         let allSkills = document.querySelectorAll( ".skill-box .skill-progress span" );
-        allSkills.forEach( skill =>
+        allSkills.forEach( span =>
         {
-            skill.style.width = skill.dataset.progress;
+            span.style.width = span.dataset.progress;
         } );
     }
 };
@@ -238,4 +225,135 @@ document.addEventListener( "click", function ( e )
     }
 
 } );
+
+//Select All Bullets
+
+const allBullets = document.querySelectorAll( ".nav-bullets .bullet" );
+
+allBullets.forEach( bullet =>
+{
+    bullet.addEventListener( "click", ( e ) =>
+    {
+        document.querySelector( e.target.dataset.section ).scrollIntoView( {
+            behavior: 'smooth',
+        } );
+    } );
+} );
+
+
+//Select All Links
+
+const allLinks = document.querySelectorAll( ".links a" );
+
+allLinks.forEach( link =>
+{
+    link.addEventListener( "click", ( e ) =>
+    {
+        e.preventDefault();
+        document.querySelector( e.target.dataset.section ).scrollIntoView( {
+            behavior: 'smooth',
+        } );
+    } );
+} );
+
+//Handle Active State 
+function handleActive ( ev )
+{
+    //Remove Active Class From All Childrens 
+    ev.target.parentElement.querySelectorAll( ".active" ).forEach( element =>
+    {
+        element.classList.remove( "active" );
+    } );
+    //Add Active Class For Target Element
+    ev.target.classList.add( "active" );
+}
+
+
+let bulletsSpan = document.querySelectorAll( ".bullets-option span" );
+let bulletsContainer = document.querySelector( ".nav-bullets" );
+
+let bulletsLocalItem = localStorage.getItem( "bullets_option" );
+
+if ( bulletsLocalItem !== null )
+{
+    bulletsSpan.forEach( span =>
+    {
+        span.classList.remove( "active" );
+    } );
+
+    if ( bulletsLocalItem === "block" )
+    {
+        document.querySelector( ".bullets-option .yes" ).classList.add( "active" );
+    } else
+    {
+        document.querySelector( ".bullets-option .no" ).classList.add( "active" );
+    }
+
+    bulletsContainer.style.display = bulletsLocalItem;
+
+}
+
+bulletsSpan.forEach( span =>
+{
+    span.addEventListener( "click", ( e ) =>
+    {
+        if ( span.dataset.display === "show" )
+        {
+            bulletsContainer.style.display = "block";
+            localStorage.setItem( "bullets_option", "block" );
+        } else
+        {
+            bulletsContainer.style.display = "none";
+            localStorage.setItem( "bullets_option", "none" );
+        }
+
+        handleActive( e );
+    } );
+} );
+
+//Reset Button 
+
+document.querySelector( ".reset-options" ).onclick = function ()
+{
+    localStorage.removeItem( "color_option" );
+    localStorage.removeItem( "background_option" );
+    localStorage.removeItem( "bullets_option" );
+
+    window.location.reload();
+}
+
+//Toggle Menu
+
+let toggleBtn = document.querySelector( ".toggle-menu" );
+let tLinks = document.querySelector( ".links" );
+
+toggleBtn.onclick = function ( e )
+{
+    e.stopPropagation();
+    this.classList.toggle( "menu-active" );
+    tLinks.classList.toggle( "open" );
+}
+
+
+//Clicked anywhere OutSide The Menu And Toggle Menu
+
+document.addEventListener( "click", ( e ) =>
+{
+    if ( e.target !== toggleBtn && e.target !== tLinks )
+    {
+        if ( tLinks.classList.contains( "open" ) )
+        {
+            toggleBtn.classList.remove( "menu-active" );
+            tLinks.classList.remove( "open" );
+        }
+    }
+} );
+
+//stop Propagation On Menu 
+tLinks.onclick = function ( e )
+{
+    e.stopPropagation();
+}
+
+
 
